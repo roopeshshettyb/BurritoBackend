@@ -1,0 +1,17 @@
+{
+  "name": "burrito",
+  "version": "1.0.0",
+  "description": "An E-Commerce Application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecommerce",
+    "nodejs",
+    "mysql",
+    "sequelize"
+  ],
+  "author": "roopesh",
+  "license": "ISC"
+}
