@@ -1,25 +1,30 @@
 const express = require("express");
 const app = express();
-const Sequelize = require("sequelize");
-const dbConfig = require("./config/db.config.json");
-const env = "development";
-const dbSettings = dbConfig[env];
-const sequelize = new Sequelize(
-  dbSettings.database,
-  dbSettings.username,
-  dbSettings.password,
-  dbSettings.dialectInformation
-);
+const serverConfig = require("./config/server.config.js");
+const { sequelize, Sequelize } = require("./models");
+const db = require("./models");
+
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Burrito models/tables are dropped and recreated");
+});
 
 app.get("/", (req, res) => res.send("Welcome to ecommerce app"));
 
-app.listen(3000, async () => {
+var categoriesData = [
+  { name: "Electronics", description: "This contains electrical appliances" },
+  { name: "Vegetables", description: "This contains vegetables" },
+];
+
+db.category
+  .bulkCreate(categoriesData)
+  .then(() => {
+    console.log("Category table is initialized withc ategory data");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+app.listen(serverConfig.PORT, async () => {
   console.log("Burrito is working");
   console.log("Checking for databases");
-  try {
-    await sequelize.authenticate();
-    console.log("Connected to db");
-  } catch (err) {
-    console.log("Unable to connect to db", err);
-  }
 });
