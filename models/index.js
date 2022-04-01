@@ -9,9 +9,9 @@ const sequelize = new Sequelize(
   dbSettings.dialectInformation
 );
 
-const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+const db = { sequelize, Sequelize };
 
 db.category = require("./category.model")(sequelize, Sequelize);
+//db.product = require("./product.model")(sequelize, Sequelize);
+
 module.exports = db;
