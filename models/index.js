@@ -12,6 +12,6 @@ const sequelize = new Sequelize(
 const db = { sequelize, Sequelize };
 
 db.category = require("./category.model")(sequelize, Sequelize);
-//db.product = require("./product.model")(sequelize, Sequelize);
+db.product = require("./product.model")(sequelize, Sequelize);
 
 module.exports = db;

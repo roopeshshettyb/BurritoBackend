@@ -16,13 +16,16 @@ exports.create = (req, res) => {
 
   Category.create(newCategory)
     .then((response) => {
-      console.log(`>> Category name is [${category.name}] got inserted in db`);
+      console.log(
+        `>> Category name is [${newCategory.name}] got inserted in db`
+      );
       res.status(201).send(response);
     })
     .catch((err) => {
-      console.log(">> Error in Category Creation");
+      console.log(">> Error in Category Creation ->", err);
       res.status(500).send({
         message: ">> Error in Category Creation",
+        err,
       });
     });
 };
@@ -58,29 +61,17 @@ exports.update = (req, res) => {
 };
 
 exports.deleteCategory = (req, res) => {
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Name of category can't be empty",
-    });
-    return;
-  }
-
-  const newCategory = {
-    name: req.body.name,
-    description: req.body.description,
-  };
-
   const categoryId = req.params.id;
 
-  Category.destroy(newCategory, {
+  Category.destroy({
     where: { id: categoryId },
   })
     .then((response) => {
-      console.log(`>> Category name is [${category.name}] got deleted from db`);
-      res.status(201).send(response);
+      console.log(`>> Category name is [${Category.name}] got deleted from db`);
+      res.sendStatus(201).send(response);
     })
     .catch((err) => {
-      console.log(">> Error in Category deletion");
+      console.log(">> Error in Category deletion", err);
       res.status(500).send({
         message: ">> Error in Category deletion",
       });
@@ -115,10 +106,11 @@ exports.findAll = (req, res) => {
   }
   promise
     .then((response) => {
+      //console.log("Promise response", response);
       res.status(200).send(response);
     })
     .catch((err) => {
-      console.log(">> Error in Category find all");
+      console.log(">> Error in Category find all", err);
       res.status(500).send({
         message: ">> Error in Category find all",
       });
