@@ -2,17 +2,11 @@ const db = require("../models");
 const Product = db.product;
 
 exports.create = (req, res) => {
-  if (!req.body.name || !req.body.price) {
-    res.status(400).send({
-      message: "Name/Price of product can't be empty",
-    });
-    return;
-  }
-
   const newProduct = {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
+    categoryId: req.body.categoryId,
   };
 
   Product.create(newProduct)
@@ -30,13 +24,6 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  if (req.body.name == "" || req.body.price < 0) {
-    res.status(400).send({
-      message: "Name/Price of product can't be empty",
-    });
-    return;
-  }
-
   const newProduct = {
     name: req.body.name,
     description: req.body.description,
@@ -113,6 +100,23 @@ exports.findAll = (req, res) => {
       console.log(">> Error in Product find all", err);
       res.status(500).send({
         message: ">> Error in Product find all",
+      });
+    });
+};
+
+exports.getProductsUnderCategory = (req, res) => {
+  const categoryId = req.params.categoryId;
+  Product.findAll({
+    where: {
+      categoryId: categoryId,
+    },
+  })
+    .then((response) => {
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: ">> Error in Product find all by cat",
       });
     });
 };

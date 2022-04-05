@@ -2,13 +2,6 @@ const db = require("../models");
 const Category = db.category;
 
 exports.create = (req, res) => {
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Name of category can't be empty",
-    });
-    return;
-  }
-
   const newCategory = {
     name: req.body.name,
     description: req.body.description,
@@ -31,13 +24,6 @@ exports.create = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Name of category can't be empty",
-    });
-    return;
-  }
-
   const newCategory = {
     name: req.body.name,
     description: req.body.description,

@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const serverConfig = require("./config/server.config.js");
-const { sequelize, Sequelize } = require("./models");
 const db = require("./models");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +21,9 @@ function init() {
       console.log(">> Bulkcreate error", err);
     });
 }
+
+//set one to many relation ship b/w category and product
+db.category.hasMany(db.product);
 db.sequelize.sync({ force: true }).then(() => {
   console.log(">> Burrito models/tables are dropped and recreated");
 });
