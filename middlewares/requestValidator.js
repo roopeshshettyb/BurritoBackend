@@ -16,31 +16,32 @@ const validateProductRequest = (req, res, next) => {
       message: "Name/Price/CatId of product can't be empty",
     });
     return;
-  }
-  if (req.body.categoryId) {
-    category.findByPk(req.body.categoryId).then((response) => {
-      if (!response) {
-        res.status(400).send({
-          message: "Category ID it can't be empty",
-        });
-        return;
-      }
-    });
   } else {
-    res.status(400).send({
-      message: "Category ID it can't be empty",
-    });
-    return;
+    if (req.body.categoryId) {
+      category.findByPk(req.body.categoryId).then((response) => {
+        if (!response) {
+          res.status(400).send({
+            message: "Cant find category",
+          });
+          return;
+        } else {
+          if (req.body.price <= 0) {
+            res.status(400).send({
+              message: "Price is wrong",
+            });
+            return;
+          } else {
+            next();
+          }
+        }
+      });
+    } else {
+      res.status(400).send({
+        message: "Category ID it can't be empty",
+      });
+      return;
+    }
   }
-
-  if (req.body.price <= 0) {
-    res.status(400).send({
-      message: "Price is wrong",
-    });
-    return;
-  }
-  next();
-  return;
 };
 
 const validateCategoryInRequestParams = (req, res, next) => {
@@ -61,6 +62,7 @@ const validateCategoryInRequestParams = (req, res, next) => {
         res.status(500).send({
           message: "Some internal error occured",
         });
+        return;
       });
   } else {
     res.status(400).send({

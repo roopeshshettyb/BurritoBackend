@@ -14,6 +14,10 @@ module.exports = function (app) {
     categoryController.update
   );
   app.delete("/ecomm/api/v1/categories/:id", categoryController.deleteCategory);
-  app.get("/ecomm/api/v1/categories/:id", categoryController.findOne);
+  app.get(
+    "/ecomm/api/v1/categories/:id",
+    requestValidator.validateCategoryRequest,
+    categoryController.findOne
+  );
   app.get("/ecomm/api/v1/categories", categoryController.findAll);
 };
