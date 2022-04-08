@@ -3,10 +3,19 @@ const app = express();
 const serverConfig = require("./config/server.config.js");
 const db = require("./models");
 const bodyParser = require("body-parser");
+const { ROLES } = require("./models");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 function init() {
+  // db.ROLES.create({
+  //   id: 1,
+  //   name: db.ROLES[0],
+  // });
+  // db.ROLES.create({
+  //   id: 2,
+  //   name: db.ROLES[1],
+  // });
   var categoriesData = [
     { name: "Electronics", description: "This contains electrical appliances" },
     { name: "Vegetables", description: "This contains vegetables" },
@@ -26,6 +35,7 @@ function init() {
 db.category.hasMany(db.product);
 db.sequelize.sync({ force: true }).then(() => {
   console.log(">> Burrito models/tables are dropped and recreated");
+  init();
 });
 require("./routes/category.routes")(app);
 require("./routes/product.routes")(app);
