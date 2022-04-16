@@ -27,6 +27,17 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId",
 });
 
-db.ROLES = ["user", "admin"];
+db.user.belongsToMany(db.cart, {
+  through: "user_carts",
+  foreignKey: "userId",
+  otherKey: "cartId",
+});
+db.product.belongsToMany(db.cart, {
+  through: "cart_products",
+  foreignKey: "cartId",
+  otherKey: "productId",
+});
+
+db.ROLES = ["customer", "admin"];
 
 module.exports = db;

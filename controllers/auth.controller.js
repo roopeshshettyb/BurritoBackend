@@ -1,12 +1,12 @@
 let bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const db = require("../models");
+const config = require("../config/auth.config");
+
 const User = db.user;
 const Role = db.role;
 const Op = db.Sequelize.Op;
-
-const db = require("../models");
-const config = require("../config/auth.config");
 
 exports.signup = (req, res) => {
   User.create({
@@ -18,21 +18,28 @@ exports.signup = (req, res) => {
       console.log(`>> User name [${req.body.username}] got inserted in db`);
       if (req.body.roles) {
         Role.findAll({
-          name: {
-            [Op.or]: req.body.roles,
+          where: {
+            name: {
+              [Op.or]: req.body.roles,
+            },
           },
         }).then((roles) => {
           user.setRoles(roles).then(() => {
-            res.send({ message: "User added and Role given succesffully" });
+            res
+              .status(200)
+              .send({ message: "User added and Role given succesffully" });
           });
         });
       } else {
-        user.setRoles([1]).then((resp) => {
-          resp.send({ message: "User added and Role given succesffully" });
+        user.setRoles(["1"]).then((resp) => {
+          //console.log(resp.dataValues);
+          console.log(`>> User name [${req.body.username}] got roles`);
+
+          res
+            .status(201)
+            .send({ message: "User added and Role given succesffully" });
         });
       }
-
-      res.status(201).send(user);
     })
     .catch((err) => {
       console.log(">> Error in User Sign up ->", err);
@@ -66,17 +73,18 @@ exports.signin = (req, res) => {
 
       var authorities = [];
       user.getRoles().then((roles) => {
+        //console.log(roles);
         for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
+          //console.log(">>", roles[i].dataValues.name);
+          authorities.push("ROLE_" + roles[i].dataValues.name.toUpperCase());
         }
-      });
-
-      res.status(200).send({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        accessToken: token,
-        roles: authorities,
+        res.status(200).send({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: authorities,
+          accessToken: token,
+        });
       });
     })
     .catch((err) => {

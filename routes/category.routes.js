@@ -6,17 +6,20 @@ module.exports = function (app) {
   app.post(
     "/ecomm/api/v1/categories/create",
     requestValidator.validateCategoryRequest,
+    auth.verifyToken,
     auth.isAdmin,
     categoryController.create
   );
   app.put(
     "/ecomm/api/v1/categories/update/:id",
     requestValidator.validateCategoryRequest,
+    auth.verifyToken,
     auth.isAdmin,
     categoryController.update
   );
   app.delete(
     "/ecomm/api/v1/categories/:id",
+    auth.verifyToken,
     auth.isAdmin,
     categoryController.deleteCategory
   );
