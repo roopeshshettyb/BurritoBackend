@@ -31,13 +31,19 @@ exports.signup = (req, res) => {
           });
         });
       } else {
-        user.setRoles(["1"]).then((resp) => {
-          //console.log(resp.dataValues);
-          console.log(`>> User name [${req.body.username}] got roles`);
+        Role.findAll({
+          where: {
+            name: "customer",
+          },
+        }).then((role) => {
+          user.setRoles(role).then((resp) => {
+            //console.log(resp.dataValues);
+            console.log(`>> User name [${req.body.username}] got roles`);
 
-          res
-            .status(201)
-            .send({ message: "User added and Role given succesffully" });
+            res
+              .status(201)
+              .send({ message: "User added and Role given succesffully" });
+          });
         });
       }
     })

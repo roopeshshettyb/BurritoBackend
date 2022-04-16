@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "ecommerce_prod",
+    "database": "ecommerce_prod1",
     "username": "ecom",
     "password": "Mysql@123",
     "dialectInformation": {
