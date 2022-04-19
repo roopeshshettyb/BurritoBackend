@@ -51,7 +51,6 @@ exports.signup = (req, res) => {
       console.log(">> Error in User Sign up ->", err);
       res.status(500).send({
         message: ">> Error in User Sign up",
-        err,
       });
     });
 };

@@ -1,0 +1,19 @@
+{
+  "role": {
+    "username": "User1",
+    "password": "User11",
+    "email": "myemail1ss@email.com",
+    "roles": ["admin"]
+  },
+  "noRole": {
+    "username": "User1",
+    "password": "User11",
+    "email": "myemail1ss@email.com"
+  },
+  "wrongRole": {
+    "username": "User1",
+    "password": "User11",
+    "email": "myemail1ss@email.com",
+    "roles": ["weird"]
+  }
+}
