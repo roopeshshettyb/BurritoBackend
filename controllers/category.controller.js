@@ -12,13 +12,12 @@ exports.create = (req, res) => {
       console.log(
         `>> Category name is [${newCategory.name}] got inserted in db`
       );
-      res.status(201).send(response);
+      res.status(201).send({ message: "Category created" });
     })
     .catch((err) => {
       console.log(">> Error in Category Creation ->", err);
       res.status(500).send({
         message: ">> Error in Category Creation",
-        err,
       });
     });
 };

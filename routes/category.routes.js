@@ -6,8 +6,7 @@ module.exports = function (app) {
   app.post(
     "/ecomm/api/v1/categories/create",
     requestValidator.validateCategoryRequest,
-    auth.verifyToken,
-    auth.isAdmin,
+
     categoryController.create
   );
   app.put(

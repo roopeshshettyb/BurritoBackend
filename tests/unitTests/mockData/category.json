@@ -1,0 +1,9 @@
+{
+  "create": {
+    "name": "Cat 222"
+  },
+  "update": {
+    "name": "It is edited",
+    "description": "sike"
+  }
+}

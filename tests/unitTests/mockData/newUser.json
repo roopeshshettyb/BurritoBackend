@@ -10,9 +10,8 @@
     "password": "User11",
     "email": "myemail1ss@email.com"
   },
-  "wrongRole": {
+  "noPassword": {
     "username": "User1",
-    "password": "User11",
     "email": "myemail1ss@email.com",
     "roles": ["weird"]
   }

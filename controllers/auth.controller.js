@@ -81,7 +81,7 @@ exports.signin = (req, res) => {
         //console.log(roles);
         for (let i = 0; i < roles.length; i++) {
           //console.log(">>", roles[i].dataValues.name);
-          authorities.push("ROLE_" + roles[i].dataValues.name.toUpperCase());
+          authorities.push("ROLE_" + roles[i].name.toUpperCase());
         }
         res.status(200).send({
           id: user.id,
