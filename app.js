@@ -53,7 +53,7 @@ require("./routes/category.routes")(app);
 require("./routes/product.routes")(app);
 require("./routes/auth.routes")(app);
 require("./routes/cart.routes")(app);
-app.listen(serverConfig.PORT || process.env.PORT, async () => {
+app.listen(process.env.PORT, async () => {
   console.log(">> Burrito is working");
   console.log(">> Checking for databases");
 });
