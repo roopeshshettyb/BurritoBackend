@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const dbConfig = require("../config/db.config.json");
-const env = "development";
+const env = "production";
 const dbSettings = dbConfig[env];
 const sequelize = new Sequelize(
   dbSettings.database,
